@@ -1,5 +1,7 @@
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import styled from "styled-components";
+import { auth } from "./firebase";
 
 const Wrapper = styled.div`
   height: 100%;
@@ -60,9 +62,11 @@ export default function CreateAccount() {
     }
   };
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); //화면이 새로고침 되지 않도록
     try {
+        //await createUserWithEmailAndPassword(auth, email, password);
+         
       // create an account
       // set the name of the user.
       // redirect to the home page.
@@ -76,7 +80,7 @@ export default function CreateAccount() {
 
   return (
     <Wrapper>
-      <Title>Log Into 𝕏</Title>
+      <Title>Join 𝕏</Title>
       <Form onSubmit={onSubmit}>
         <Input
           onChange={onChange}

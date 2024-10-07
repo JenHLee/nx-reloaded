@@ -10,11 +10,16 @@ import { useEffect } from "react";
 import LoadingScreen from "./components/loading-screen";
 import { useState } from "react";
 import { auth } from "./routes/firebase";
+import ProtectedRoute from "./components/protected-route";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout />,
+    element: (
+      <ProtectedRoute>
+        <Layout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: "",
@@ -47,9 +52,9 @@ color: white;
 font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sana', 'Helvetica Neue'}`;
 
 const Wrapper = styled.div`
-height: 100vh;
-display: flex;
-justify-content: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
 `;
 
 function App() {
@@ -57,7 +62,7 @@ function App() {
   const init = async () => {
     // wait firebase authentication
     await auth.authStateReady();
-    setLoading(false)
+    setLoading(false);
   };
   useEffect(() => {
     init();

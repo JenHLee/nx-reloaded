@@ -6,7 +6,7 @@ const Wrapper = styled.div`
   display: grid;
   gap: 20px;
   grid-template-columns: 1fr 4fr;
-  height: 100px;
+  height: 100%;
   padding: 50px 0px;
   width: 100%;
   max-width: 860px;
@@ -18,6 +18,7 @@ const Menu = styled.div`
   align-items: center;
   gap: 20px;
 `;
+
 const MenuItem = styled.div`
   cursor: pointer;
   display: flex;

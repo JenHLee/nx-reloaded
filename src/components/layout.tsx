@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { auth } from "../routes/firebase";
 
@@ -95,6 +95,7 @@ export default function Layout() {
           </svg>
         </MenuItem>
       </Menu>
+      <Outlet />
     </Wrapper>
   );
 }

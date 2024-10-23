@@ -1,7 +1,7 @@
+import { addDoc, collection, updateDoc } from "firebase/firestore";
 import { useState } from "react";
 import { styled } from "styled-components";
-import { auth, db, storage } from "../routes/firebase";
-import { addDoc, collection, updateDoc } from "firebase/firestore";
+import { auth, db, storage } from "../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 const Form = styled.form`
@@ -58,6 +58,7 @@ const SubmitBtn = styled.input`
     opacity: 0.9;
   }
 `;
+
 export default function PostTweetForm() {
   const [isLoading, setLoading] = useState(false);
   const [tweet, setTweet] = useState("");
@@ -65,21 +66,12 @@ export default function PostTweetForm() {
   const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTweet(e.target.value);
   };
-
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { files } = e.target; 
+    const { files } = e.target;
     if (files && files.length === 1) {
-      const selectedFile = files[0];
-      const fileSizeInMB = selectedFile.size / (1024*1024)
-
-      if (fileSizeInMB < 1){
-        setFile(selectedFile);
-      } else {
-        alert("File size is too large. Please select a file smaller than 1MB.")
-      }
+      setFile(files[0]);
     }
   };
-
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const user = auth.currentUser;
@@ -93,10 +85,7 @@ export default function PostTweetForm() {
         userId: user.uid,
       });
       if (file) {
-        const locationRef = ref(
-          storage,
-          `tweets/${user.uid}-${user.displayName}/${doc.id}`
-        );
+        const locationRef = ref(storage, `tweets/${user.uid}/${doc.id}`);
         const result = await uploadBytes(locationRef, file);
         const url = await getDownloadURL(result.ref);
         await updateDoc(doc, {
@@ -111,18 +100,18 @@ export default function PostTweetForm() {
       setLoading(false);
     }
   };
-
   return (
     <Form onSubmit={onSubmit}>
       <TextArea
+        required
         rows={5}
         maxLength={180}
         onChange={onChange}
         value={tweet}
-        placeholder="What is happening?"
+        placeholder="What is happening?!"
       />
       <AttachFileButton htmlFor="file">
-        {file ? "Photo added ✅" : "Add Photo"}
+        {file ? "Photo added ✅" : "Add photo"}
       </AttachFileButton>
       <AttachFileInput
         onChange={onFileChange}

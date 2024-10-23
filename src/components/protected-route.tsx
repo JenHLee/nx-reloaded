@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { auth } from "../routes/firebase";
+import { auth } from "../firebase";
 
 export default function ProtectedRoute({
   children, // children is anything inside of component // Home or Profile

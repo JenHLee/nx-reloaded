@@ -5,12 +5,10 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { updateProfile } from "firebase/auth";
 import {
   collection,
-  doc,
   getDocs,
   limit,
   orderBy,
   query,
-  updateDoc,
   where,
 } from "firebase/firestore";
 import { ITweet } from "../components/timeline";
@@ -126,7 +124,7 @@ export default function Profile() {
       await updateProfile(user, {
         displayName: newName,
       });
-      
+
       setEditing(false);
     } catch (e) {
       console.error("User name must be shorter than 10 characters", e);
@@ -165,7 +163,6 @@ export default function Profile() {
       ) : (
         <>
           <NameInput
-            placeholder={user?.displayName}
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
           />

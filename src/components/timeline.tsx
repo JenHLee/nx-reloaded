@@ -23,9 +23,8 @@ export interface ITweet {
 const Wrapper = styled.div`
   display: flex;
   gap: 10px;
-  width: 100%;
   flex-direction: column;
-  overflow-y: auto;
+  overflow-y: scroll;
 `;
 
 export default function timeline() {
